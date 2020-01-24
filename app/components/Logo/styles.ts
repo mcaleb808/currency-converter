@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     height: screenWidth
   },
   image: {
-    width: screenWidth / 2
+    width: screenWidth / 2,
+    tintColor: '#4F607A'
   },
   text: {
     fontSize: 28,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, StatusBar } from 'react-native';
+import { ScrollView, StatusBar, Linking } from 'react-native';
 import { Separator, ListItem } from '../components/List';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -8,16 +8,18 @@ const ICON_SIZE = 23;
 
 class Options extends Component {
   handlePressTheme = () => {
-    console.log('theme clicked');
+    this.props.navigation.navigate('Themes');
   };
 
   handleSitePress = () => {
-    console.log('press site');
+    Linking.openURL('https://github.com/mcaleb808').catch(() =>
+      alert('An error occured')
+    );
   };
 
   render() {
     return (
-      <ScrollView style={{ marginTop: 50 }}>
+      <ScrollView>
         <StatusBar translucent={false} barStyle="default" />
         <ListItem
           text="Themes"
@@ -32,7 +34,7 @@ class Options extends Component {
         />
         <Separator />
         <ListItem
-          text="FIxer.io"
+          text="About Us"
           onPress={this.handleSitePress}
           customIcon={
             <Ionicons name="ios-link" size={ICON_SIZE} color={ICON_COLOR} />

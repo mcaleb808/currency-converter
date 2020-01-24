@@ -10,7 +10,7 @@ const ListItem = ({
   visible = true,
   checkmark = true,
   customIcon = null,
-  iconBackground
+  iconBackground = '#4F6D7A'
 }) => (
   <TouchableHighlight onPress={onPress} underlayColor="#e2e2e2">
     <View style={styles.row}>

@@ -1,5 +1,10 @@
 import React from 'react';
-import Home from './screens/Home';
-import Themes from './screens/Themes';
+import { Provider } from 'react-redux';
+import App from './config/routes';
+import store from './config/store';
 
-export default () => <Themes />;
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
