@@ -6,12 +6,12 @@ const Logo = () => (
   <View style={styles.container}>
     <ImageBackground
       resizeMode="contain"
-      source={require('./images/background.png')}
+      source={require('../../images/background.png')}
       style={styles.containerImage}
     >
       <Image
         resizeMode="contain"
-        source={require('./images/logo.png')}
+        source={require('../../images/logo.png')}
         style={styles.image}
       />
     </ImageBackground>
