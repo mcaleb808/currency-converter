@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 
-import { View, StatusBar } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  StatusBar,
+  KeyboardAvoidingViewBase
+} from 'react-native';
 
 import { Container } from '../components/container';
 import { Logo } from '../components/Logo';
 import { InputWithButton } from '../components/TextInput';
 import { ClearButton } from '../components/Button';
 import { LastConverted } from '../components/Text';
+import { Header } from '../components/Header';
 
 const TEMP_BASE_CURRENCY = 'USD';
 const TEMP_QUOTE_CURRENCY = 'RWF';
@@ -32,10 +37,15 @@ class Home extends Component {
     console.log('hiiiiii');
   };
 
+  handleOptionPress = () => {
+    console.log('fuck off');
+  };
+
   render() {
     return (
       <Container>
         <StatusBar translucent={false} barStyle="light-content" />
+        <Header onPress={this.handleOptionPress} />
         <Logo />
         <InputWithButton
           buttonText={TEMP_BASE_CURRENCY}
