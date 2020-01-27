@@ -12,7 +12,7 @@ class CurrencyList extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: 50 }}>
         <StatusBar barStyle="default" translucent={false} />
         <FlatList
           data={data}

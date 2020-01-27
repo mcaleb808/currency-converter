@@ -1,5 +1,5 @@
 import React from 'react';
 import Home from './screens/Home';
-import CurrencyList from './screens/CurrencyList';
+import Themes from './screens/Themes';
 
-export default () => <CurrencyList />;
+export default () => <Themes />;
