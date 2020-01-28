@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { changePrimaryColor } from '../actions/themes';
 import { ListItem, Separator } from '../components/List';
 
-class Themes extends Component {
+class Themes extends Component<any> {
   handleThemesPress = color => {
     const { navigation, dispatch } = this.props;
     dispatch(changePrimaryColor(color));
