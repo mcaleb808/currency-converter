@@ -9,9 +9,18 @@ import { ClearButton } from '../components/Button';
 import { LastConverted } from '../components/Text';
 import { Header } from '../components/Header';
 
-import { changeCurrencyAmount, swapCurrency } from '../actions/currencies';
+import {
+  changeCurrencyAmount,
+  swapCurrency,
+  getInitialConversion
+} from '../actions/currencies';
 
-class Home extends Component<{}, { value: any }> {
+class Home extends Component<any, { value: any }> {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getInitialConversion());
+  }
+
   handlePressBaseCurrency = () => {
     const { navigation } = this.props;
     navigation.navigate('CurrencyList', {

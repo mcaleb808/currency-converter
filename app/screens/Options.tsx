@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 const ICON_COLOR = '#868686';
 const ICON_SIZE = 23;
 
-class Options extends Component {
+class Options extends Component<any> {
   handlePressTheme = () => {
     this.props.navigation.navigate('Themes');
   };
