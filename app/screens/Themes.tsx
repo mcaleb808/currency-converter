@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { ScrollView, StatusBar } from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
-
+import { connect } from 'react-redux';
+import { changePrimaryColor } from '../actions/themes';
 import { ListItem, Separator } from '../components/List';
 
 class Themes extends Component {
   handleThemesPress = color => {
-    console.log('press them' + color);
+    const { navigation, dispatch } = this.props;
+    dispatch(changePrimaryColor(color));
+    navigation.goBack();
   };
   render() {
     return (
-      <ScrollView style={{ paddingTop: 50 }}>
+      <ScrollView>
         <StatusBar barStyle="default" translucent={false} />
         <ListItem
           text="Blue"
@@ -49,4 +51,4 @@ class Themes extends Component {
   }
 }
 
-export default Themes;
+export default connect()(Themes);

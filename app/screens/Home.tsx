@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-
-import {
-  KeyboardAvoidingView,
-  StatusBar,
-  KeyboardAvoidingViewBase
-} from 'react-native';
+import { StatusBar } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Container } from '../components/container';
 import { Logo } from '../components/Logo';
@@ -13,58 +9,81 @@ import { ClearButton } from '../components/Button';
 import { LastConverted } from '../components/Text';
 import { Header } from '../components/Header';
 
-const TEMP_BASE_CURRENCY = 'USD';
-const TEMP_QUOTE_CURRENCY = 'RWF';
-const TEMP_BASE_PRICE = '1';
-const TEMP_QUOTE_PRICE = '951.36';
-const TEMP_CONVERSION_RATE = 951.36;
-const TEMP_CONVERSION_DATE = new Date();
+import { changeCurrencyAmount, swapCurrency } from '../actions/currencies';
 
-class Home extends Component {
+class Home extends Component<{}, { value: any }> {
   handlePressBaseCurrency = () => {
-    console.log('pressed base');
+    const { navigation } = this.props;
+    navigation.navigate('CurrencyList', {
+      title: 'Base Currency',
+      type: 'base'
+    });
   };
 
   handlePressQuoteCurrency = () => {
-    console.log('pressed quote');
+    const { navigation } = this.props;
+    navigation.navigate('CurrencyList', {
+      title: 'Quote Currency',
+      type: 'quote'
+    });
   };
 
-  handleTextChange = text => {
-    console.log(text);
+  handleTextChange = amount => {
+    const { dispatch } = this.props;
+    dispatch(changeCurrencyAmount(amount));
   };
 
   handleSwapCurrencies = () => {
-    console.log('hiiiiii');
+    const { dispatch } = this.props;
+    dispatch(swapCurrency());
   };
 
   handleOptionPress = () => {
     console.log('fuck off');
+    this.props.navigation.navigate('Options');
   };
 
   render() {
+    const {
+      isFetching,
+      amount,
+      conversionRate,
+      baseCurrency,
+      quoteCurrency,
+      lastConvertedDate,
+      primaryColor
+    } = this.props;
+
+    let quotePrice = '...';
+    if (!isFetching) {
+      quotePrice = (amount * conversionRate).toFixed(2);
+    }
     return (
-      <Container>
+      <Container backgroundColor={primaryColor}>
         <StatusBar translucent={false} barStyle="light-content" />
         <Header onPress={this.handleOptionPress} />
-        <Logo />
+        <Logo tintColor={primaryColor} />
+
         <InputWithButton
-          buttonText={TEMP_BASE_CURRENCY}
+          buttonText={baseCurrency}
           onPress={this.handlePressBaseCurrency}
-          defaultValue={TEMP_BASE_PRICE}
+          defaultValue={amount.toString()}
           keyboardType="numeric"
           onChangeText={this.handleTextChange}
+          textColor={primaryColor}
         />
         <InputWithButton
-          buttonText={TEMP_QUOTE_CURRENCY}
+          buttonText={quoteCurrency}
           editable={false}
           onPress={this.handlePressQuoteCurrency}
-          defaultValue={TEMP_QUOTE_PRICE}
+          value={quotePrice}
+          textColor={primaryColor}
         />
         <LastConverted
-          base={TEMP_BASE_CURRENCY}
-          quote={TEMP_QUOTE_CURRENCY}
-          date={TEMP_CONVERSION_DATE}
-          conversionRate={TEMP_CONVERSION_RATE}
+          date={lastConvertedDate}
+          base={baseCurrency}
+          quote={quoteCurrency}
+          conversionRate={conversionRate}
         />
         <ClearButton
           text="Reverse Currencies"
@@ -75,4 +94,22 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const mapStateToProps = state => {
+  const { baseCurrency, quoteCurrency } = state.currencies;
+  const conversionSelector = state.currencies.conversions[baseCurrency] || {};
+  const rates = conversionSelector.rates || {};
+
+  return {
+    baseCurrency,
+    quoteCurrency,
+    amount: state.currencies.amount,
+    conversionRate: rates[quoteCurrency] || 0,
+    lastConvertedDate: conversionSelector.date
+      ? new Date(conversionSelector.date)
+      : new Date(),
+    isFetching: conversionSelector.isFetching,
+    primaryColor: state.theme.primaryColor
+  };
+};
+
+export default connect(mapStateToProps)(Home);
