@@ -8,7 +8,7 @@ class Themes extends Component<any> {
   handleThemesPress = color => {
     const { navigation, dispatch } = this.props;
     dispatch(changePrimaryColor(color));
-    navigation.goBack();
+    navigation.navigate('Home');
   };
   render() {
     return (
