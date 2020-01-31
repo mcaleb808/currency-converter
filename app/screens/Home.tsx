@@ -48,7 +48,6 @@ class Home extends Component<any, { value: any }> {
   };
 
   handleOptionPress = () => {
-    console.log('fuck off');
     this.props.navigation.navigate('Options');
   };
 
